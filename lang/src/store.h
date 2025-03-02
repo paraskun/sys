@@ -1,10 +1,10 @@
-#ifndef LANG_TABLE_H
-#define LANG_TABLE_H
+#ifndef LANG_STORE_H
+#define LANG_STORE_H
 
 #include "token.h"
 #include "value.h"
 
-struct Table {
+struct Store {
  private:
   const char *kws;
   const char *ops;
@@ -21,4 +21,4 @@ struct Table {
   Value Get(Token tok);
 };
 
-#endif  // LANG_TABLE_H
+#endif  // LANG_STORE_H
