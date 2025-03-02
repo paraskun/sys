@@ -1,0 +1,1 @@
+add_executable(lsd lsd/main.c)
