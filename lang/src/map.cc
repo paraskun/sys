@@ -4,8 +4,6 @@
 
 using namespace std;
 
-istream& operator>>(istream& is, char v) { return is >> &v; }
-
 template <class K, class V, class H>
 void Map<K, V, H>::Grow() {
   size_t cap = (this->cap + 1) * 2;
@@ -86,28 +84,9 @@ size_t Map<K, V, H>::Size() {
   return len;
 }
 
-template <class K, class V, class H>
-void Map<K, V, H>::Load(istream& is) {
-  K k;
-  V v;
-
-  for (int i; is >> i; ++i) {
-    is >> '|' >> k >> v;
-    Set(k, v);
-  }
-}
-
-template <class K, class V, class H>
-void Map<K, V, H>::Dump(ostream& os) {
-  vector<Entry<K, V>*> rows(len);
-
-  for (size_t i = 0; i < cap; ++i)
-    if (dat[i])
-      rows[dat[i]->pos] = dat[i];
-
-  for (size_t i = 0; i < len; ++i)
-    os << rows[i]->pos << " | " << rows[i]->key << " " << rows[i]->val << endl;
-}
+istream& operator>>(istream& is, char v) { return is >> &v; }
+istream& operator>>(istream& is, Void& v) { return is; }
+ostream& operator<<(ostream& os, const Void& v) { return os; }
 
 istream& operator>>(istream& is, Value& v) {
   char type;
@@ -137,8 +116,28 @@ ostream& operator<<(ostream& os, const Value& v) {
   }
 }
 
-istream& operator>>(istream& is, Void& v) { return is; }
-ostream& operator<<(ostream& os, const Void& v) { return os; }
+template <class K, class V, class H>
+void Map<K, V, H>::Load(istream& is) {
+  K k;
+  V v;
+
+  for (int i; is >> i; ++i) {
+    is >> '|' >> k >> v;
+    Set(k, v);
+  }
+}
+
+template <class K, class V, class H>
+void Map<K, V, H>::Dump(ostream& os) {
+  vector<Entry<K, V>*> rows(len);
+
+  for (size_t i = 0; i < cap; ++i)
+    if (dat[i])
+      rows[dat[i]->pos] = dat[i];
+
+  for (size_t i = 0; i < len; ++i)
+    os << rows[i]->pos << " | " << rows[i]->key << " " << rows[i]->val << endl;
+}
 
 template class Map<string, Void>;
 template class Map<string, Value>;

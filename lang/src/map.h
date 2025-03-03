@@ -6,7 +6,7 @@
 
 struct Void {};
 
-template <class K, class V, class H = std::hash<K>>
+template <class K, class V = Void, class H = std::hash<K>>
 struct Entry {
   K key;
   V val;
@@ -15,7 +15,7 @@ struct Entry {
   size_t sig;
 };
 
-template <class K, class V, class H = std::hash<K>>
+template <class K, class V = Void, class H = std::hash<K>>
 struct Map {
  private:
   size_t len;
