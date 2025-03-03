@@ -1,9 +1,12 @@
 #ifndef LANG_VALUE_H
 #define LANG_VALUE_H
 
+#include <iostream>
+
 struct Value {
   enum ValueType {
-    VAL_NUM,
+    NUM,
+    UND,
   } type;
 
   union {
