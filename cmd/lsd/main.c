@@ -16,7 +16,7 @@ static int error(const char* path)
 
 /// @brief Determine if there is directory at the specified path.
 /// @param path exploration point
-static int isDir(const char* path)
+static int is_dir(const char* path)
 {
     struct stat s;
 
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 
         j = i + sprintf(path + i, "/%s", ent->d_name);
 
-        if (!isDir(path))
+        if (!is_dir(path))
             continue;
 
         DIR* idir = opendir(path);
@@ -61,8 +61,6 @@ int main(int argc, char** argv)
             continue;
         }
 
-        bool has = false;
-
         while ((ent = readdir(idir)))
         {
             if (!strcmp(ent->d_name, "..") || !strcmp(ent->d_name, "."))
@@ -70,17 +68,12 @@ int main(int argc, char** argv)
 
             sprintf(path + j, "/%s", ent->d_name);
 
-            if (isDir(path))
+            if (is_dir(path))
             {
-                has = true;
+                path[j + 1] = '\0';
+                printf("%s\n", path);
                 break;
             }
-        }
-
-        if (has)
-        {
-            path[j + 1] = '\0';
-            printf("%s\n", path);
         }
 
         closedir(idir);
